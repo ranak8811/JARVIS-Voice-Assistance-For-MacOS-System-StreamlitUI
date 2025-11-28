@@ -12,6 +12,7 @@ Jarvis AI is a Python-based personal desktop assistant designed for macOS, inspi
 - **Application Launcher:** Opens native macOS applications such as Calendar, Calculator, and Terminal.
 - **Wikipedia Search:** Fetches and reads summaries from Wikipedia for your queries.
 - **Logging:** All interactions and errors are logged to `logs/application.log` for debugging and monitoring.
+- **AI-Powered Answers:** Uses Google Gemini to answer queries not explicitly handled by the assistant, leveraging the `google-generativeai` package.
 
 ## Prerequisites
 
@@ -52,6 +53,8 @@ brew install portaudio
    - `pyttsx3`
    - `pyaudio`
    - `wikipedia`
+   - `google-generativeai`
+   - `python-dotenv`
 
    You can install them using `pip`:
 
@@ -64,6 +67,17 @@ brew install portaudio
    ```bash
    pip install SpeechRecognition==3.14.3 pyttsx3 pyaudio wikipedia
    ```
+
+4. **Configure Environment Variables:**
+   For the AI-Powered Answers feature (Google Gemini), you need to set up a `.env` file in the root directory of the project. This file should contain your Google Gemini API key.
+
+   Create a file named `.env` in the project root and add the following line:
+
+   ```
+   GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
+   ```
+
+   Replace `"YOUR_GEMINI_API_KEY"` with your actual Google Gemini API key. You can obtain a key from the Google AI Studio or Google Cloud Console.
 
 ## Usage
 

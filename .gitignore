@@ -3,3 +3,4 @@ logs
 .gitignore
 research.ipynb
 .env
+.gemini_env
