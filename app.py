@@ -7,6 +7,11 @@ import wikipedia
 import webbrowser 
 import random 
 import subprocess
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Logging configuration 
 LOG_DIR = "logs"
@@ -31,7 +36,7 @@ def speak(text):
         text (str): The text to be spoken.
     """
     engine = pyttsx3.init()
-    engine.setProperty('rate', 170)  # Setting a consistent speaking rate
+    engine.setProperty('rate', 180)  # Setting a consistent speaking rate
 
     voices = engine.getProperty("voices")
     # Try to set a specific voice, fallback to the first available if index 7 is not present
@@ -143,6 +148,21 @@ def open_website(url, site_name="website"):
         speak(f"Sorry, I couldn't open {site_name}.")
         logging.error(f"Error opening {site_name} at {url}: {e}")
 
+def gemini_model_response(user_input):
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+    if not GEMINI_API_KEY:
+        logging.error("GEMINI_API_KEY not found in environment variables.")
+        return "Sorry, the AI model is not configured correctly."
+        
+    genai.configure(api_key=GEMINI_API_KEY)
+
+    model = genai.GenerativeModel('gemini-2.5-flash')
+    prompt = '''Your name is Jarvis, a personal assistant.
+        Answer the provided question in short form. Question: ''' + user_input
+    response = model.generate_content(prompt)
+    result = response.text
+    return result
+
 def main():
     """
     Main function to run the Jarvis personal assistant.
@@ -253,8 +273,13 @@ def main():
                 logging.info("User asked to exit the program.")
                 exit()
             else:
-                speak('I am sorry, I can not help you with that. Please try again.')
-                logging.info("User asked for an unsupported feature.")
+                if query == "None":
+                    speak('I am sorry, I can not help you with that. Please try again.')
+                    logging.info("User asked for an unsupported feature.")
+                else:
+                    response = gemini_model_response(query)
+                    speak(response)
+                    logging.info(f"User asked: {query}. Response: {response}")
 
 if __name__ == "__main__":
     main()
