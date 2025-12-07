@@ -195,7 +195,7 @@ def main():
                 speak("It's my pleasure sir. Always happy to help.")
                 logging.info("User expressed gratitude.")
 
-            elif 'play music' in query:
+            elif 'play music' in query or 'play song' in query:
                 play_music()
                 logging.info("User asked to play music.")
         
@@ -219,7 +219,34 @@ def main():
                     speak("Sorry, I couldn't open the Calendar application.")
                     logging.error(f"Error opening Calendar app: {e}")
 
-            elif "open calculator" in query or "calculator" in query:
+            elif "close calendar" in query:
+                speak("Closing Calendar")
+                try:
+                    subprocess.Popen(["osascript", "-e", 'tell application "Calendar" to quit'])
+                    logging.info("User requested to close Calendar.")
+                except Exception as e:
+                    speak("Sorry, I couldn't close the Calendar application.")
+                    logging.error(f"Error closing Calendar app: {e}")
+
+            elif 'open music' in query:
+                speak("Opening Music...")
+                try:
+                    subprocess.Popen(["open", "-a", "Music"])
+                    logging.info("User requested to open Music application.")
+                except Exception as e:
+                    speak("Sorry, I couldn't open the Music application.")
+                    logging.error(f"Error opening Music app: {e}")
+            
+            elif "close music" in query:
+                speak("Closing Music")
+                try:
+                    subprocess.Popen(["osascript", "-e", 'tell application "Music" to quit'])
+                    logging.info("User requested to close Music.")
+                except Exception as e:
+                    speak("Sorry, I couldn't close the Music application.")
+                    logging.error(f"Error closing Music app: {e}")
+
+            elif "open calculator" in query:
                 speak("Opening calculator")
                 try:
                     subprocess.Popen(["open", "-a", "Calculator"])
@@ -227,6 +254,15 @@ def main():
                 except Exception as e:
                     speak("Sorry, I couldn't open the Calculator application.")
                     logging.error(f"Error opening Calculator app: {e}")
+
+            elif "close calculator" in query:
+                speak("Closing calculator")
+                try:
+                    subprocess.Popen(["osascript", "-e", 'tell application "Calculator" to quit'])
+                    logging.info("User requested to close Calculator.")
+                except Exception as e:
+                    speak("Sorry, I couldn't close the Calculator application.")
+                    logging.error(f"Error closing Calculator app: {e}")
 
             elif 'open terminal' in query:
                 speak("Opening Terminal...")
@@ -236,6 +272,16 @@ def main():
                 except Exception as e:
                     speak("Sorry, I couldn't open the Terminal application.")
                     logging.error(f"Error opening Terminal app: {e}")
+
+            elif "close terminal" in query:
+                speak("Closing terminal")
+                try:
+                    subprocess.Popen(["osascript", "-e", 'tell application "Terminal" to quit'])
+                    logging.info("User requested to close Terminal.")
+                except Exception as e:
+                    speak("Sorry, I couldn't close the Terminal application.")
+                    logging.error(f"Error closing Terminal app: {e}")
+
 
             elif 'open youtube' in query:
                 search_query = query.replace("open youtube", "").strip()
