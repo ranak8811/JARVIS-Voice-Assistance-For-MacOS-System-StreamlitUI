@@ -1,138 +1,149 @@
-# Jarvis AI - Your Personal Desktop Assistant (macOS)
+# JARVIS - Hybrid AI Assistant
 
-Jarvis AI is a Python-based personal desktop assistant designed for macOS, inspired by the iconic AI from Marvel's Iron Man. This project allows you to interact with your computer using voice commands, performing various tasks like browsing the web, playing music, opening applications, and fetching information.
+JARVIS is an advanced, Python-based personal AI assistant with a modular Object-Oriented Programming (OOP) architecture. It offers two distinct interfaces for interaction: a rich, modern web UI built with Streamlit and a classic, voice-controlled command-line interface (CLI).
 
-## Features
+This project is inspired by the iconic AI from Marvel's Iron Man and is designed to be both a powerful productivity tool and a showcase of modern Python development practices.
 
-- **Voice Interaction:** Utilizes Speech Recognition to understand your commands and `pyttsx3` for spoken responses.
-- **Contextual Greetings:** Greets you based on the time of day.
-- **Time Inquiry:** Tells you the current time.
-- **Web Browsing:** Open popular websites like Google, Facebook, GitHub, and YouTube with simple voice commands. You can also search directly on YouTube.
-- **Music Playback:** Plays random `.mp3` songs from a designated `music` directory.
-- **Application Launcher:** Opens native macOS applications such as Calendar, Calculator, and Terminal.
-- **Wikipedia Search:** Fetches and reads summaries from Wikipedia for your queries.
-- **Logging:** All interactions and errors are logged to `logs/application.log` for debugging and monitoring.
-- **AI-Powered Answers:** Uses Google Gemini to answer queries not explicitly handled by the assistant, leveraging the `google-generativeai` package.
+## ✨ Key Features
 
-## Prerequisites
+- **Dual Interface:**
+  - **Web UI (Streamlit):** A full-featured chat interface where you can type or speak commands. It includes a dynamic audio player for each response with play/pause/seek controls.
+  - **CLI:** A traditional voice-only mode for quick, hands-free commands and responses.
 
-Before you begin, ensure you have the following installed on your macOS system:
+- **Intelligent & Conversational:**
+  - Powered by the **Google Gemini API** for handling general questions, brainstorming, and complex conversational tasks.
 
-- **Python 3.x:** This project is developed with Python.
-- **pip:** Python's package installer.
-- **PortAudio:** A cross-platform audio I/O library required by `pyaudio`.
+- **Command & Control:**
+  - **Application Management:** Opens and closes macOS applications like Calendar, Calculator, Terminal, and Music.
+  - **Web Search:** Opens Google, Facebook, GitHub, and performs specific searches on YouTube.
+  - **Information Retrieval:** Fetches and reads summaries from Wikipedia.
+  - **Media Control:** Plays music from a local `music/` directory.
 
-### Installing PortAudio on macOS
+- **Customizable Voice Output:**
+  - The web UI allows you to choose from multiple English accents (US, UK, Australian, Indian) for the text-to-speech voice, powered by Google's Text-to-Speech service.
 
-You can install PortAudio using Homebrew:
+## 🛠️ Tech Stack & Architecture
 
+- **Core:** Python 3.10+
+- **Web Interface:** Streamlit
+- **AI Model:** Google Gemini
+- **Voice Input:** `SpeechRecognition`
+- **Voice Output:** `gTTS` (Web UI) & `pyttsx3` (CLI)
+- **Architecture:** The project follows an OOP design for modularity and scalability.
+
+## 📁 Project Structure
+
+```
+.
+├── app.py                      # Streamlit Web UI entry point
+├── cli.py                      # Command-Line Interface entry point
+├── requirements.txt            # List of Python dependencies
+├── README.md                   # Project documentation
+├── .env                        # Environment variables (e.g., GEMINI_API_KEY)
+├── config/
+│   └── settings.py             # Handles loading environment settings
+├── jarvis/
+│   ├── __init__.py             # Python package initializer
+│   ├── assistant.py            # Main JarvisAssistant class (the brain)
+│   ├── gemini_engine.py        # Handles communication with Gemini API
+│   ├── memory.py               # Manages conversation history
+│   ├── prompt_controller.py    # Builds prompts for the AI model
+│   ├── actions.py              # Executes system-level commands (e.g., open apps, play music)
+│   ├── voice_io.py             # Centralizes voice input and audio generation
+│   └── conversation_history.json # Stores chat history
+├── logs/                       # Directory for application logs
+│   └── application.log         # Log file for Jarvis interactions
+└── music/                      # Directory to store MP3 music files
+    └── <your_songs>.mp3        # Example: song1.mp3, groovy-vibe.mp3
+```
+
+## 📦 Dependencies
+
+The project relies on the following Python packages. These are listed in `requirements.txt`:
+
+- `google-generativeai`: For interacting with the Google Gemini API.
+- `python-dotenv`: For loading environment variables from a `.env` file.
+- `streamlit`: For building the interactive web user interface.
+- `SpeechRecognition`: For converting spoken language into text.
+- `pyttsx3`: A cross-platform text-to-speech conversion library (used in CLI).
+- `pyaudio`: Required by `SpeechRecognition` for microphone access.
+- `wikipedia`: For searching and retrieving information from Wikipedia.
+- `gTTS`: Google Text-to-Speech library for generating audio files (used in Web UI).
+
+## 🚀 Setup and Installation
+
+### 1. Prerequisites
+- **Python 3.10 or higher.**
+- **Homebrew** (for macOS) to install `portaudio`.
+
+Install `portaudio`, which is required for voice input:
 ```bash
 brew install portaudio
 ```
 
-## Installation
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/ranak8811/JARVIS-Voice-Assistance-For-MacOS-System.git
-   cd JARVIS-Voice-Assistance-For-MacOS-System
-   ```
-
-2. **Create a virtual environment (recommended):**
-
-   ```bash
-   python3 -m venv jarvis_env
-   source jarvis_env/bin/activate
-   ```
-
-3. **Install dependencies:**
-   The project uses the following Python packages:
-
-   - `SpeechRecognition==3.14.3`
-   - `pyttsx3`
-   - `pyaudio`
-   - `wikipedia`
-   - `google-generativeai`
-   - `python-dotenv`
-
-   You can install them using `pip`:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-   If `requirements.txt` is not available, you can install them manually:
-
-   ```bash
-   pip install SpeechRecognition==3.14.3 pyttsx3 pyaudio wikipedia
-   ```
-
-4. **Configure Environment Variables:**
-   For the AI-Powered Answers feature (Google Gemini), you need to set up a `.env` file in the root directory of the project. This file should contain your Google Gemini API key.
-
-   Create a file named `.env` in the project root and add the following line:
-
-   ```
-   GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
-   ```
-
-   Replace `"YOUR_GEMINI_API_KEY"` with your actual Google Gemini API key. You can obtain a key from the Google AI Studio or Google Cloud Console.
-
-## Usage
-
-1. **Ensure your microphone is properly configured and accessible.**
-
-2. **Run the `app.py` script:**
-
-   ```bash
-   python3 app.py
-   ```
-
-3. **Start giving commands:**
-   Jarvis will greet you and then wait for your voice commands. Here are some examples of commands you can use:
-
-   - "Good morning/afternoon/evening" (Jarvis will respond based on the time)
-   - "What is your name?"
-   - "What time is it?"
-   - "How are you?"
-   - "Who made you?"
-   - "Thank you"
-   - "Play music"
-   - "Open Google"
-   - "Open Facebook"
-   - "Open GitHub"
-   - "Open Calendar"
-   - "Open Calculator"
-   - "Open Terminal"
-   - "Open YouTube" (opens default YouTube)
-   - "Open YouTube [search query]" (e.g., "Open YouTube latest tech news")
-   - "Wikipedia [your query]" (e.g., "Wikipedia Python programming language")
-   - "Exit", "Quit", or "Stop" (to end the program)
-
-## Project Structure
-
-```
-.
-├── app.py                  # Main application logic for Jarvis AI
-├── requirements.txt        # List of Python dependencies
-├── README.md               # Project README file
-├── logs/                   # Directory for application logs
-│   └── application.log     # Log file for Jarvis interactions
-└── music/                  # Directory to store MP3 music files
-    ├── song1.mp3
-    └── song2.mp3
+### 2. Clone the Repository
+```bash
+git clone https://github.com/your-username/JARVIS-Voice-Assistance-For-MacOS-System.git
+cd JARVIS-Voice-Assistance-For-MacOS-System
 ```
 
-## Contributing
+### 3. Set Up a Virtual Environment
+```bash
+python3 -m venv jarvis_env
+source jarvis_env/bin/activate
+```
 
-Feel free to fork the repository, create pull requests, or open issues for any suggestions or bug reports.
+### 4. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-## License
+### 5. Configure Your API Key
+Create a file named `.env` in the root of the project and add your Google Gemini API key:
+```
+GEMINI_API_KEY="YOUR_API_KEY_HERE"
+```
+You can get a free API key from [Google AI Studio](https://aistudio.google.com/).
 
-This project is open-source and available under the [MIT License](LICENSE). _(You might need to create a LICENSE file if one doesn't exist)_
+## ▶️ How to Run
 
-## Acknowledgements
+You can run JARVIS in two modes:
 
-- Inspired by the Jarvis AI from Marvel.
-- Thanks to the developers of `SpeechRecognition`, `pyttsx3`, `pyaudio`, and `wikipedia` libraries.
+### 1. Web UI Mode
+For the full experience with chat, voice selection, and audio players:
+```bash
+streamlit run app.py
+```
+
+### 2. CLI Mode
+For the classic, voice-only terminal experience:
+```bash
+python cli.py
+```
+
+## 🗣️ Supported Commands
+
+You can use the following commands in either the web UI (via text or voice) or the CLI:
+
+- **General Conversation:**
+  - "What is your name?"
+  - "What time is it?"
+  - "How are you?"
+  - "Who made you?"
+  - "Thank you"
+
+- **Actions & Commands:**
+  - "Play music"
+  - "Close music"
+  - "Open Google"
+  - "Open Facebook"
+  - "Open GitHub"
+  - "Open Calendar" / "Close Calendar"
+  - "Open Calculator" / "Close Calculator"
+  - "Open Terminal" / "Close Terminal"
+  - "Open YouTube"
+  - "Open YouTube [your search query]"
+  - "Wikipedia [your search query]"
+
+- **Exiting (CLI only):**
+  - "Exit", "Quit", or "Stop"

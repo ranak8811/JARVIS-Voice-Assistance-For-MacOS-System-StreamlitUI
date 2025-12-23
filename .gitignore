@@ -16,3 +16,9 @@ research.ipynb
 # Ignore Python cache
 __pycache__/
 *.pyc
+
+# Audio Files
+temp_audio.mp3
+
+# Pdf files
+Assignment5.pdf
