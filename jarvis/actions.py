@@ -3,32 +3,8 @@ import webbrowser
 import wikipedia
 import random
 import subprocess
-import pyttsx3
 import logging
-
-# It's better to have a single, configurable speaker instance
-# but for simplicity, we'll keep the original speak function's logic.
-def speak(text):
-    """
-    Converts text to speech.
-    """
-    try:
-        engine = pyttsx3.init()
-        engine.setProperty('rate', 180)
-        voices = engine.getProperty("voices")
-        if len(voices) > 7:
-            engine.setProperty('voice', voices[7].id)
-        else:
-            engine.setProperty('voice', voices[0].id)
-        
-        print(f"JARVIS: {text}")
-        logging.info(f"Speaking: {text}")
-        engine.say(text)
-        engine.runAndWait()
-        engine.stop()
-    except Exception as e:
-        logging.error(f"Error in speak function: {e}")
-        print(f"Error: Could not speak. Details: {e}")
+from jarvis.voice_io import speak
 
 class ActionHandler:
     """

@@ -1,5 +1,3 @@
-import speech_recognition as sr
-import pyttsx3
 import logging
 import datetime
 
@@ -8,60 +6,10 @@ from jarvis.gemini_engine import GeminiEngine
 from jarvis.memory import Memory
 from jarvis.prompt_controller import PromptController
 from jarvis.assistant import JarvisAssistant
+from jarvis.voice_io import speak, take_command
 
 # --- Basic Logging Setup ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-def speak(text):
-    """
-    Converts text to speech using pyttsx3.
-    """
-    try:
-        engine = pyttsx3.init()
-        engine.setProperty('rate', 180)
-        voices = engine.getProperty("voices")
-        # A common male voice index, adjust if necessary
-        if len(voices) > 7:
-            engine.setProperty('voice', voices[7].id)
-        else:
-            engine.setProperty('voice', voices[0].id)
-        
-        print(f"JARVIS: {text}")
-        logging.info(f"Speaking: {text}")
-        engine.say(text)
-        engine.runAndWait()
-        engine.stop()
-    except Exception as e:
-        logging.error(f"Error in speak function: {e}")
-        print(f"Error: Could not use text-to-speech. Details: {e}")
-
-def take_command():
-    """
-    Listens for microphone input and converts it to text.
-    """
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("\nListening...")
-        r.pause_threshold = 1
-        r.adjust_for_ambient_noise(source, duration=1)
-        audio = r.listen(source)
-
-    try:
-        print("Recognizing...")
-        query = r.recognize_google(audio, language='en-in')
-        print(f"User said: {query}")
-        logging.info(f"User said: {query}")
-        return query.lower()
-    except sr.UnknownValueError:
-        speak("Sorry, I could not understand the audio. Please try again.")
-        return ""
-    except sr.RequestError as e:
-        speak("Could not request results from the speech recognition service.")
-        logging.error(f"Speech Recognition service error: {e}")
-        return ""
-    except Exception as e:
-        logging.error(f"An unexpected error during speech recognition: {e}")
-        return ""
 
 def main():
     """

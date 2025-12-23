@@ -5,3 +5,4 @@ SpeechRecognition
 pyttsx3
 pyaudio
 wikipedia
+gTTS
