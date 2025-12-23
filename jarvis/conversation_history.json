@@ -1,0 +1,14 @@
+[
+    {
+        "role": "user",
+        "parts": [
+            "who made you"
+        ]
+    },
+    {
+        "role": "model",
+        "parts": [
+            "I am a large language model, trained by Google."
+        ]
+    }
+]

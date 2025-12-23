@@ -1,6 +1,7 @@
-SpeechRecognition==3.14.3 
+google-generativeai
+python-dotenv
+streamlit
+SpeechRecognition
 pyttsx3
 pyaudio
 wikipedia
-google-generativeai
-python-dotenv

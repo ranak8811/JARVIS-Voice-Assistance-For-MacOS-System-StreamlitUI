@@ -1,6 +1,18 @@
-check_env
-logs
-.gitignore
-research.ipynb
+# Ignore environment variables
 .env
-.gemini_env
+
+# Ignore virtual environment
+jarvis_env/
+
+# Ignore log files
+logs/
+
+# Ignore Jupyter notebooks
+research.ipynb
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore Python cache
+__pycache__/
+*.pyc
