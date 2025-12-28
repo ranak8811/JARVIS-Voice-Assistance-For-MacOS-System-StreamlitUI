@@ -102,7 +102,7 @@ for i, message in enumerate(st.session_state.messages):
                 if audio_file:
                     st.audio(audio_file, autoplay=True)
                     # Clean up the temporary audio file after playing if desired
-                    # os.remove(audio_file) 
+                    os.remove(audio_file) 
                 else:
                     st.error("Could not generate audio file.")
             # Reset state so the player disappears on the next interaction

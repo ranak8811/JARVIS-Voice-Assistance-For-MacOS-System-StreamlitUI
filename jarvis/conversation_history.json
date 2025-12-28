@@ -118,5 +118,29 @@
         "parts": [
             "I can't directly open music on your device, as I'm an AI and don't have control over your local applications.\n\nHowever, I can help you in other ways if you'd like:\n\n1.  **If you tell me what device you're on (e.g., iPhone, Android, PC), I can tell you how to open a music app.**\n2.  **I can recommend music, artists, or genres.**\n3.  **I can tell you facts about music.**\n4.  **I can play a music-related game with you.**\n\nWhat would you like to do?"
         ]
+    },
+    {
+        "role": "user",
+        "parts": [
+            "hu r u"
+        ]
+    },
+    {
+        "role": "model",
+        "parts": [
+            "I am a large language model, trained by Google."
+        ]
+    },
+    {
+        "role": "user",
+        "parts": [
+            "who are you"
+        ]
+    },
+    {
+        "role": "model",
+        "parts": [
+            "I am a large language model, an AI, trained by Google."
+        ]
     }
 ]
