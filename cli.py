@@ -1,5 +1,6 @@
 import logging
 import datetime
+import sys
 
 from config.settings import Settings
 from jarvis.gemini_engine import GeminiEngine
@@ -13,7 +14,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 def main():
     """
-    Main function to run the JARVIS voice assistant.
+    Main function to run the JARVIS voice assistant in CLI mode.
     """
     # --- INITIALIZATION ---
     settings = Settings()
@@ -22,8 +23,9 @@ def main():
         speak("Fatal error: Could not load Gemini API key.")
         return
 
+    # Initialize components with file path for history
     engine = GeminiEngine(api_key=api_key)
-    memory = Memory()
+    memory = Memory(file_path="jarvis/conversation_history.json")
     prompt_controller = PromptController()
     assistant = JarvisAssistant(
         engine=engine,
@@ -48,12 +50,30 @@ def main():
         if not query:
             continue
 
+        # --- Command Handling ---
         if 'exit' in query or 'quit' in query or 'stop' in query:
             speak("Goodbye, have a nice day!")
             break
         
-        response = assistant.respond(query)
-        speak(response)
+        if 'export conversation' in query:
+            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"conversation_export_{timestamp}.json"
+            memory.export_history(filename)
+            speak(f"Conversation exported successfully to {filename}")
+            continue
+
+        # --- Streaming Response ---
+        print("JARVIS: ", end="", flush=True)
+        full_response = ""
+        for chunk in assistant.respond_stream(query):
+            print(chunk, end="", flush=True)
+            full_response += chunk
+        
+        print("\n") # Newline after the response is complete
+        
+        # Speak the full response after streaming it to the console
+        if full_response:
+            speak(full_response)
 
 if __name__ == "__main__":
     main()

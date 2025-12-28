@@ -7,20 +7,32 @@ This project is inspired by the iconic AI from Marvel's Iron Man and is designed
 ## ✨ Key Features
 
 - **Dual Interface:**
-  - **Web UI (Streamlit):** A full-featured chat interface where you can type or speak commands. It includes a dynamic audio player for each response with play/pause/seek controls.
+
+  - **Web UI (Streamlit):** A full-featured chat interface where you can type or speak commands.
   - **CLI:** A traditional voice-only mode for quick, hands-free commands and responses.
 
 - **Intelligent & Conversational:**
+
   - Powered by the **Google Gemini API** for handling general questions, brainstorming, and complex conversational tasks.
+  - **Streaming Responses:** Assistant's responses are streamed in real-time for a more interactive feel.
+
+- **Voice Input:**
+
+  - **Speech-to-Text:** Both the web UI and CLI accept voice commands.
 
 - **Command & Control:**
+
   - **Application Management:** Opens and closes macOS applications like Calendar, Calculator, Terminal, and Music.
   - **Web Search:** Opens Google, Facebook, GitHub, and performs specific searches on YouTube.
   - **Information Retrieval:** Fetches and reads summaries from Wikipedia.
   - **Media Control:** Plays music from a local `music/` directory.
 
 - **Customizable Voice Output:**
-  - The web UI allows you to choose from multiple English accents (US, UK, Australian, Indian) for the text-to-speech voice, powered by Google's Text-to-Speech service.
+
+  - The web UI allows you to choose from multiple English accents (US, UK, Australian, Indian) for the text-to-speech voice.
+
+- **Chat Export:**
+  - Export your conversation history to a JSON file from both the web UI and the CLI.
 
 ## 🛠️ Tech Stack & Architecture
 
@@ -73,36 +85,44 @@ The project relies on the following Python packages. These are listed in `requir
 ## 🚀 Setup and Installation
 
 ### 1. Prerequisites
+
 - **Python 3.10 or higher.**
 - **Homebrew** (for macOS) to install `portaudio`.
 
 Install `portaudio`, which is required for voice input:
+
 ```bash
 brew install portaudio
 ```
 
 ### 2. Clone the Repository
+
 ```bash
-git clone https://github.com/your-username/JARVIS-Voice-Assistance-For-MacOS-System.git
-cd JARVIS-Voice-Assistance-For-MacOS-System
+git clone https://github.com/ranak8811/JARVIS-Voice-Assistance-For-MacOS-System-StreamlitUI.git
+cd JARVIS-Voice-Assistance-For-MacOS-System-StreamlitUI
 ```
 
 ### 3. Set Up a Virtual Environment
+
 ```bash
 python3 -m venv jarvis_env
 source jarvis_env/bin/activate
 ```
 
 ### 4. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 5. Configure Your API Key
+
 Create a file named `.env` in the root of the project and add your Google Gemini API key:
+
 ```
 GEMINI_API_KEY="YOUR_API_KEY_HERE"
 ```
+
 You can get a free API key from [Google AI Studio](https://aistudio.google.com/).
 
 ## ▶️ How to Run
@@ -110,15 +130,19 @@ You can get a free API key from [Google AI Studio](https://aistudio.google.com/)
 You can run JARVIS in two modes:
 
 ### 1. Web UI Mode
+
 For the full experience with chat, voice selection, and audio players:
+
 ```bash
 streamlit run app.py
 ```
 
 ### 2. CLI Mode
-For the classic, voice-only terminal experience:
+
+For the classic, voice-only terminal experience. Make sure to use the python interpreter from your virtual environment to avoid module not found errors.
+
 ```bash
-python cli.py
+jarvis_env/bin/python cli.py
 ```
 
 ## 🗣️ Supported Commands
@@ -126,6 +150,7 @@ python cli.py
 You can use the following commands in either the web UI (via text or voice) or the CLI:
 
 - **General Conversation:**
+
   - "What is your name?"
   - "What time is it?"
   - "How are you?"
@@ -133,6 +158,8 @@ You can use the following commands in either the web UI (via text or voice) or t
   - "Thank you"
 
 - **Actions & Commands:**
+
+  - "Open music"
   - "Play music"
   - "Close music"
   - "Open Google"
@@ -144,6 +171,7 @@ You can use the following commands in either the web UI (via text or voice) or t
   - "Open YouTube"
   - "Open YouTube [your search query]"
   - "Wikipedia [your search query]"
+  - "Export conversation"
 
 - **Exiting (CLI only):**
   - "Exit", "Quit", or "Stop"
